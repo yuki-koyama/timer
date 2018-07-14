@@ -8,22 +8,14 @@
 
 namespace timer
 {
-    
-    struct TimerData
-    {
-        TimerData()
-        {
-            t_construct = std::chrono::system_clock::now();
-        }
-        std::chrono::system_clock::time_point t_construct;
-    };
-    
     class Timer
     {
     public:
-        Timer(const std::string& message = "timer", bool show_destruction_message = true) : message_(message), show_destruction_message_(show_destruction_message)
+        Timer(const std::string& message = "timer", bool show_destruction_message = true) :
+        message_(message),
+        show_destruction_message_(show_destruction_message),
+        t_construct_(std::chrono::system_clock::now())
         {
-            data_ = std::make_shared<TimerData>();
         }
         
         ~Timer()
@@ -31,7 +23,7 @@ namespace timer
             if (show_destruction_message_)
             {
                 const auto t_destruct = std::chrono::system_clock::now();
-                std::cout << "[" << message_ << " : \t" << std::chrono::duration_cast<std::chrono::milliseconds>(t_destruct - data_->t_construct).count() << " ms]" << std::endl;
+                std::cout << "[" << message_ << " : \t" << std::chrono::duration_cast<std::chrono::milliseconds>(t_destruct - t_construct_).count() << " ms]" << std::endl;
             }
         }
         
@@ -40,13 +32,13 @@ namespace timer
         long get_elapsed_time_in_milliseconds() const
         {
             const auto t_now = std::chrono::system_clock::now();
-            return std::chrono::duration_cast<std::chrono::milliseconds>(t_now - data_->t_construct).count();
+            return std::chrono::duration_cast<std::chrono::milliseconds>(t_now - t_construct_).count();
         }
 
     private:
         std::string message_;
         const bool show_destruction_message_;
-        std::shared_ptr<TimerData> data_;
+        const std::chrono::system_clock::time_point t_construct_;
     };
 }
 
