@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1)
 project(timer CXX)
 set(CMAKE_CXX_STANDARD 11)
 
-file(GLOB header timer.hpp)
+file(GLOB header ${CMAKE_SOURCE_DIR}/include/timer.hpp)
 install(FILES ${header} DESTINATION include)
 
 option(TIMER_BUILD_TEST "Build test" OFF)
