@@ -24,7 +24,7 @@ It will automatically display the elapsed time in `std::cout`, for example,
 
 `timer` is a header-only, single-file library. It can be used by just copying `timer.hpp` and pasting it into your project.
 
-Alternatively, it can be installed using `cmake`. If your project is also managed using `cmake`, `ExternalProject` commands are useful for including `timer` to your project.
+Alternatively, it can be installed using `cmake`. If your project is also managed using `cmake`, `ExternalProject` commands are useful for including `timer` to your project. Another option is to use the `add_subdirectory` command to include this repository.
 
 ## Licensing
 
