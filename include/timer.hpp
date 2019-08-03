@@ -38,15 +38,15 @@ namespace timer
     {
     public:
         Timer(const std::string& message = "timer", bool show_destruction_message = true) :
-        message_(message),
-        show_destruction_message_(show_destruction_message),
-        t_construct_(std::chrono::system_clock::now())
+        m_message(message),
+        m_show_destruction_message(show_destruction_message),
+        m_t_construct(std::chrono::system_clock::now())
         {
         }
         
         ~Timer()
         {
-            if (show_destruction_message_)
+            if (m_show_destruction_message)
             {
                 const std::string elapsed_time_message = [&]()
                 {
@@ -70,28 +70,28 @@ namespace timer
                     return sstream.str();
                 }();
 
-                std::cout << "[ " << message_ << " : \t" << elapsed_time_message << " ]" << std::endl;
+                std::cout << "[ " << m_message << " : \t" << elapsed_time_message << " ]" << std::endl;
             }
         }
         
-        void set_message(const std::string& message) { this->message_ = message; }
+        void set_message(const std::string& message) { this->m_message = message; }
         
         long get_elapsed_time_in_microseconds() const
         {
             const auto t_now = std::chrono::system_clock::now();
-            return std::chrono::duration_cast<std::chrono::microseconds>(t_now - t_construct_).count();
+            return std::chrono::duration_cast<std::chrono::microseconds>(t_now - m_t_construct).count();
         }
 
         long get_elapsed_time_in_milliseconds() const
         {
             const auto t_now = std::chrono::system_clock::now();
-            return std::chrono::duration_cast<std::chrono::milliseconds>(t_now - t_construct_).count();
+            return std::chrono::duration_cast<std::chrono::milliseconds>(t_now - m_t_construct).count();
         }
 
     private:
-        std::string message_;
-        const bool show_destruction_message_;
-        const std::chrono::system_clock::time_point t_construct_;
+        std::string                                 m_message;
+        const bool                                  m_show_destruction_message;
+        const std::chrono::system_clock::time_point m_t_construct;
     };
 }
 
