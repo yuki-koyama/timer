@@ -1,5 +1,7 @@
 # timer
 
+![GitHub](https://img.shields.io/github/license/yuki-koyama/timer)
+
 Execution timer for measuring elapsed times for code blocks written in C++11
 
 ## Usage
@@ -15,9 +17,9 @@ By using `timer`, this is easily achieved:
   some_function();
 }
 ```
-It will automatically display the elapsed time in `std::cout`, for example, 
+It will automatically display the elapsed time in `std::cout`, for example,
 ```
-[timer : 24601 ms]
+[ timer : 24.601 ms ]
 ```
 
 ## Installation
