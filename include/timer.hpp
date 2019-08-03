@@ -73,9 +73,7 @@ namespace timer
                 std::cout << "[ " << m_message << " : \t" << elapsed_time_message << " ]" << std::endl;
             }
         }
-        
-        void set_message(const std::string& message) { this->m_message = message; }
-        
+
         long get_elapsed_time_in_microseconds() const
         {
             const auto t_now = std::chrono::system_clock::now();
@@ -89,7 +87,7 @@ namespace timer
         }
 
     private:
-        std::string                                 m_message;
+        const std::string                           m_message;
         const bool                                  m_show_destruction_message;
         const std::chrono::system_clock::time_point m_t_construct;
     };
