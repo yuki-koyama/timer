@@ -48,30 +48,32 @@ namespace timer
         {
             if (m_show_destruction_message)
             {
-                const std::string elapsed_time_message = [&]()
-                {
-                    const auto t_elapsed_in_microsec = get_elapsed_time_in_microseconds();
-                    const auto t_elapsed_in_millisec = t_elapsed_in_microsec / 1000.0;
-                    const auto t_elapsed_in_sec      = t_elapsed_in_millisec / 1000.0;
-
-                    std::ostringstream sstream;
-                    if (t_elapsed_in_sec > 10.0)
-                    {
-                        sstream << std::fixed << std::setprecision(3) << t_elapsed_in_sec << " s";
-                    }
-                    else if (t_elapsed_in_millisec > 10.0)
-                    {
-                        sstream << std::fixed << std::setprecision(3) << t_elapsed_in_millisec << " ms";
-                    }
-                    else
-                    {
-                        sstream << t_elapsed_in_microsec << " us";
-                    }
-                    return sstream.str();
-                }();
+                const std::string elapsed_time_message = get_elapsed_time_as_string();
 
                 std::cout << "[ " << m_message << " : \t" << elapsed_time_message << " ]" << std::endl;
             }
+        }
+
+        std::string get_elapsed_time_as_string() const
+        {
+            const auto t_elapsed_in_microsec = get_elapsed_time_in_microseconds();
+            const auto t_elapsed_in_millisec = t_elapsed_in_microsec / 1000.0;
+            const auto t_elapsed_in_sec      = t_elapsed_in_millisec / 1000.0;
+
+            std::ostringstream sstream;
+            if (t_elapsed_in_sec > 10.0)
+            {
+                sstream << std::fixed << std::setprecision(3) << t_elapsed_in_sec << " s";
+            }
+            else if (t_elapsed_in_millisec > 10.0)
+            {
+                sstream << std::fixed << std::setprecision(3) << t_elapsed_in_millisec << " ms";
+            }
+            else
+            {
+                sstream << t_elapsed_in_microsec << " us";
+            }
+            return sstream.str();
         }
 
         long get_elapsed_time_in_microseconds() const
