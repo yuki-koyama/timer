@@ -25,10 +25,12 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-#include <string>
-#include <memory>
 #include <chrono>
+#include <iomanip>
 #include <iostream>
+#include <memory>
+#include <sstream>
+#include <string>
 
 namespace timer
 {
@@ -46,13 +48,40 @@ namespace timer
         {
             if (show_destruction_message_)
             {
-                const auto t_destruct = std::chrono::system_clock::now();
-                std::cout << "[" << message_ << " : \t" << std::chrono::duration_cast<std::chrono::milliseconds>(t_destruct - t_construct_).count() << " ms]" << std::endl;
+                const std::string elapsed_time_message = [&]()
+                {
+                    const auto t_elapsed_in_microsec = get_elapsed_time_in_microseconds();
+                    const auto t_elapsed_in_millisec = t_elapsed_in_microsec / 1000.0;
+                    const auto t_elapsed_in_sec      = t_elapsed_in_millisec / 1000.0;
+
+                    std::ostringstream sstream;
+                    if (t_elapsed_in_sec > 10.0)
+                    {
+                        sstream << std::fixed << std::setprecision(3) << t_elapsed_in_sec << " s";
+                    }
+                    else if (t_elapsed_in_millisec > 10.0)
+                    {
+                        sstream << std::fixed << std::setprecision(3) << t_elapsed_in_millisec << " ms";
+                    }
+                    else
+                    {
+                        sstream << t_elapsed_in_microsec << " us";
+                    }
+                    return sstream.str();
+                }();
+
+                std::cout << "[ " << message_ << " : \t" << elapsed_time_message << " ]" << std::endl;
             }
         }
         
         void set_message(const std::string& message) { this->message_ = message; }
         
+        long get_elapsed_time_in_microseconds() const
+        {
+            const auto t_now = std::chrono::system_clock::now();
+            return std::chrono::duration_cast<std::chrono::microseconds>(t_now - t_construct_).count();
+        }
+
         long get_elapsed_time_in_milliseconds() const
         {
             const auto t_now = std::chrono::system_clock::now();
